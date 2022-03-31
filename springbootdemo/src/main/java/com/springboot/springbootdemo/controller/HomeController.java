@@ -1,6 +1,8 @@
 package com.springboot.springbootdemo.controller;
 
 
+import java.util.Date;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 	@GetMapping("/")
 	public String welcome() {
-		return "<h1>Hello visitor !!</h1>";
+		return "<h1>Hello visitor !! Today is "+ new Date() + "</h1>";
 	}
 
 }
