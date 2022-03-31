@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class DBConnection {
     static final String url = "jdbc:mysql://localhost:3306/myOrg";
     static final String username = "root";
     static final String password = "abhiraj2k2000";
     static Connection connection;
 
-	@Bean
+
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         if (connection != null) {
             return connection;
