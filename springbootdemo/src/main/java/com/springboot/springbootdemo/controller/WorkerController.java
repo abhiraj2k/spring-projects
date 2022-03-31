@@ -5,20 +5,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.springbootdemo.dao.WorkerDAO;
 import com.springboot.springbootdemo.model.Worker;
 import com.springboot.springbootdemo.repository.WorkerRepository;
 
 @RestController()
 @RequestMapping("/worker")
 public class WorkerController {
-	@Autowired
-	WorkerRepository workerRepository;
+//	@Qualifier("workerMysqlRepository")
+//	@Autowired
+	@Resource(name="workerMysqlRepository")
+	WorkerDAO workerRepository;
 	
 	@GetMapping("/showWorker")
 	public Worker showWorker(){

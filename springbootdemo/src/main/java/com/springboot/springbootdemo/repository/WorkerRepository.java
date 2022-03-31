@@ -17,7 +17,7 @@ import com.springboot.springbootdemo.mapper.WorkerMapper;
 import com.springboot.springbootdemo.model.Worker;
 import com.springboot.springbootdemo.util.HelperMethods;
 
-@Repository
+@Repository("workerMysqlRepository")
 public class WorkerRepository implements WorkerDAO {
 	Connection connection;
 	
