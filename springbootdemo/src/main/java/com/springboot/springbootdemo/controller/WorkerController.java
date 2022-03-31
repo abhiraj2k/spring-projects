@@ -18,12 +18,12 @@ import com.springboot.springbootdemo.repository.WorkerRepository;
 @RequestMapping("/worker")
 public class WorkerController {
 	@Autowired
-	WorkerRepository workerRepo;
+	WorkerRepository workerRepository;
 	
 	@GetMapping("/showWorker")
 	public Worker showWorker(){
 		try {
-			return workerRepo.getWorker(1);
+			return workerRepository.getWorker(1);
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return new Worker();
@@ -34,7 +34,7 @@ public class WorkerController {
 	public List<Worker> showWorkers() {
 		try {
 			
-		List<Worker> workerList = workerRepo.getWorkers();
+		List<Worker> workerList = workerRepository.getWorkers();
 		return workerList;
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class WorkerController {
 	@PostMapping("/create")
 	public String createWorker()  {
 		try {
-			workerRepo.add(new Worker(101, "Jack","Reacher","25000", "Marine", "jreacher@gmail.com"));
+			workerRepository.add(new Worker(101, "Jack","Reacher","25000", "Marine", "jreacher@gmail.com"));
 			return "Successfully Added";
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class WorkerController {
 	@PostMapping("/update")
 	public String updateWorker() {
 		try {
-			workerRepo.update(new Worker(101, "Jack","Reacher","25000", "Marine", "mfs.akash@gmail.com"));
+			workerRepository.update(new Worker(101, "Jack","Reacher","25000", "Marine", "mfs.akash@gmail.com"));
 			return "Updated Successfully";
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class WorkerController {
 	@PostMapping("/delete")
 	public String deleteWorker() {
 		try {
-			workerRepo.delete(101);
+			workerRepository.delete(101);
 			return "Deleted Successfully";
 		}catch(SQLException e) {
 			e.printStackTrace();
