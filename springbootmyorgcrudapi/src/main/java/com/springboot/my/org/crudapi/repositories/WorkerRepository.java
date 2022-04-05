@@ -97,38 +97,7 @@ public class WorkerRepository implements WorkerDAO {
     			worker.WORKER_ID = title.WORKER_REF_ID""";
 
 
-    	return this.jdbcTemplate.query(sql, new ResultSetExtractor<List<Worker>>() {
-
-			@Override
-			public List<Worker> extractData(ResultSet rs) throws SQLException, DataAccessException {
-				List<Worker> workerList = new ArrayList<Worker>();
-				Map<Integer, Worker> workerMap = new HashMap<>();
-				Map<Date, Title> titleMap = new HashMap<>();
-
-				while(rs.next()) {
-					int workerRefId = rs.getInt("WORKER_ID");
-					Worker worker = workerMap.get(workerRefId);
-					if(worker == null) {
-						worker = new Worker(rs.getInt("WORKER_ID"),rs.getString("FIRST_NAME"),rs.getString("LAST_NAME"),rs.getString("SALARY"),DateTimeUtils.getUtilDate((LocalDateTime)rs.getObject("JOINING_DATE")) ,rs.getString("DEPARTMENT"),rs.getString("EMAIL"), new ArrayList<>(), new ArrayList<>());;
-						workerMap.put(workerRefId, worker);
-						workerList.add(worker);
-					}
-					worker = workerMap.get(workerRefId);;
-					Bonus bonus = new Bonus(rs.getInt("WORKER_REF_ID"), rs.getInt("BONUS_AMOUNT"), DateTimeUtils.getUtilDate((LocalDateTime)rs.getObject("BONUS_DATE")) );;
-					
-					Title title = titleMap.get(DateTimeUtils.getUtilDate((LocalDateTime)rs.getObject("AFFECTED_FROM")));
-					
-					if(title  == null) {
-						title = new Title(rs.getInt("WORKER_REF_ID"), rs.getString("WORKER_TITLE"), DateTimeUtils.getUtilDate((LocalDateTime)rs.getObject("AFFECTED_FROM")) );
-						titleMap.put(DateTimeUtils.getUtilDate((LocalDateTime)rs.getObject("AFFECTED_FROM")), title);
-						worker.getTitle().add(title);
-					}
-
-					worker.getBonus().add(bonus);
-				}
-				return workerList;
-			}
-    	});
+    	return this.jdbcTemplate.query(sql, new WorkerBonusTitleMapper());
     }
     
     @SuppressWarnings("deprecation")
@@ -136,11 +105,11 @@ public class WorkerRepository implements WorkerDAO {
     public List<Worker> findAllCompleteWorkersWithDept(String dept){
     	String sql = """
     			SELECT * FROM worker
-    			INNER JOIN bonus ON
+    			LEFT JOIN bonus ON
     			worker.WORKER_ID = bonus.WORKER_REF_ID
-    			INNER JOIN title ON
+    			LEFT JOIN title ON
     			worker.WORKER_ID = title.WORKER_REF_ID
-    			AND worker.DEPARTMENT LIKE ?""";
+    			WHERE worker.DEPARTMENT = ? """;
     	return this.jdbcTemplate.query(sql,new Object[] {dept}, new WorkerBonusTitleMapper());
     }
     
