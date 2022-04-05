@@ -1,28 +1,17 @@
 package com.springboot.my.org.crudapi.repositories;
 
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.springboot.my.org.crudapi.dao.WorkerDAO;
 import com.springboot.my.org.crudapi.mappers.WorkerBonusTitleMapper;
 import com.springboot.my.org.crudapi.mappers.WorkerMapper;
-import com.springboot.my.org.crudapi.models.Bonus;
-import com.springboot.my.org.crudapi.models.Title;
 import com.springboot.my.org.crudapi.models.Worker;
-import com.springboot.my.org.crudapi.utils.DateTimeUtils;
 
 
 
